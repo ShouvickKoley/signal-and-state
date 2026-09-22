@@ -2,6 +2,10 @@
 
 An original gallery of 110 fully-working interaction design studies,  spanning fintech, food, health, travel, and more. Every study is live: click a card and it runs, not just describes itself.
 
+**View:** https://signal-and-state.vercel.app/
+<img width="1042" height="680" alt="image" src="https://github.com/user-attachments/assets/fecd039b-646e-4980-a233-1880abbfe5a7" />
+
+
 Designed and built by [Shouvick Koley](https://shouvick.design).
 
 ## About
