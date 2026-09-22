@@ -1,0 +1,1551 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Signal &amp; State</title>
+<meta name="description" content="An original gallery of 110 fully-working interaction design studies — spanning fintech, food, health, travel and more, every one click-and-run. Designed and built by Shouvick Koley.">
+<meta property="og:title" content="Signal &amp; State">
+<meta property="og:description" content="An original gallery of 110 fully-working interaction design studies — spanning fintech, food, health, travel and more, every one click-and-run. Designed and built by Shouvick Koley.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0d0e13">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  html,body{margin:0;padding:0}
+
+  :root{
+    --bg:#0d0e13;
+    --bg-elev:#15161d;
+    --surface:#1a1c24;
+    --surface-2:#21232d;
+    --border:#2b2e3a;
+    --border-hi:#3d4051;
+    --text:#f3f0e9;
+    --text-dim:#9b9dac;
+    --text-faint:#666877;
+    --accent:#ff6a39;
+    --accent-ink:#210d02;
+    --accent-soft:rgba(255,106,57,.15);
+    --good:#6fe3a6;
+    --warn:#ffcf5c;
+    --bad:#ff6d80;
+    --radius-s:6px;
+    --radius-m:10px;
+    --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Consolas,monospace;
+    --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+    --disp:Helvetica,Arial,'Helvetica Neue',var(--sans);
+  }
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  button{font-family:inherit;color:inherit}
+  h1,h2,h3{font-family:var(--disp);font-weight:700;margin:0;text-wrap:balance;letter-spacing:-.01em}
+  p{margin:0}
+  svg text{font-family:var(--mono)}
+  .wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(20px,5vw,48px)}
+  ::selection{background:var(--accent);color:var(--accent-ink)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+  }
+
+  /* ---- header ---- */
+  header.top{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+    background:rgba(13,14,19,.82);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .top-inner{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding-block:14px;
+  }
+  .mark{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.8rem;letter-spacing:.04em}
+  .mark .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .mark b{font-weight:600;color:var(--text)}
+  .top-nav{display:flex;align-items:center;gap:22px;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim)}
+  .top-nav a{text-decoration:none;transition:color .15s}
+  .top-nav a:hover{color:var(--accent)}
+  .top-nav a.ext{display:inline-flex;align-items:center;gap:4px}
+
+  /* ---- hero ---- */
+  .hero{padding-block:clamp(36px,6vw,64px) clamp(28px,5vw,44px)}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,52px);align-items:center}
+  @media (max-width:880px){ .hero-grid{grid-template-columns:1fr} }
+  .hero-visual{aspect-ratio:1/1;border:1px solid var(--border);border-radius:var(--radius-m);background:var(--bg-elev);overflow:hidden;max-width:480px;margin-inline:auto}
+  .hero-visual svg{display:block;width:100%;height:100%}
+  @keyframes heroSpin{ from{ transform:rotate(-90deg); } to{ transform:rotate(270deg); } }
+  .hero-arc{transform-origin:200px 200px;animation:heroSpin 14s linear infinite}
+  .visitor-chip{
+    display:inline-flex;gap:10px;align-items:baseline;font-family:var(--mono);
+    font-size:.72rem;letter-spacing:.06em;color:var(--text-faint);text-transform:uppercase;
+    border:1px solid var(--border);border-radius:999px;padding:6px 14px;margin-bottom:22px;
+  }
+  .visitor-chip b{color:var(--accent);font-weight:600;letter-spacing:0}
+  .kicker{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:14px;display:block}
+  .hero h1{font-size:clamp(2.1rem,4.6vw,3.7rem);line-height:1.02;letter-spacing:-.02em}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero-sub{font-weight:400;font-style:italic;font-size:clamp(1.02rem,1.8vw,1.25rem);color:var(--text-dim);margin-top:16px;max-width:44ch}
+  .hero-desc{margin-top:20px;max-width:56ch;color:var(--text-dim);font-size:.96rem}
+  .hero-meta{
+    display:flex;flex-wrap:wrap;gap:0;margin-top:32px;border:1px solid var(--border);border-radius:var(--radius-m);overflow:hidden;
+  }
+  .hero-meta div{
+    flex:1 1 130px;padding:14px 18px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+  }
+  .hero-meta div:last-child{border-right:none}
+  .hero-meta b{display:block;font-family:var(--disp);font-size:1.4rem;font-weight:700;color:var(--text)}
+  .hero-meta span{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint)}
+
+  /* ---- jump nav ---- */
+  .jumpnav{
+    position:sticky;top:calc(53px + env(safe-area-inset-top,0px));z-index:30;
+    background:var(--bg);border-bottom:1px solid var(--border);
+    overflow-x:auto;scrollbar-width:none;
+  }
+  .jumpnav::-webkit-scrollbar{display:none}
+  .jumpnav-inner{display:flex;gap:6px;padding-block:10px;white-space:nowrap}
+  .jumpnav a{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--text-dim);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid transparent;
+    transition:.15s;
+  }
+  .jumpnav a:hover{color:var(--text);border-color:var(--border-hi)}
+  .jumpnav a b{color:var(--text-faint);font-weight:500;margin-left:5px}
+
+  /* ---- category sections ---- */
+  .cat{padding-block:44px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:150px 1fr;gap:28px}
+  .cat:last-of-type{border-bottom:none}
+  .cat-head{position:sticky;top:calc(96px + env(safe-area-inset-top,0px));align-self:start;height:fit-content}
+  .cat-index{font-family:var(--mono);font-size:.72rem;color:var(--text-faint);letter-spacing:.06em;margin-bottom:8px}
+  .cat-head h2{font-size:clamp(1.3rem,2.4vw,1.7rem)}
+  .cat-count{font-family:var(--mono);font-size:.72rem;color:var(--text-dim);margin-top:6px;display:block}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;align-content:start}
+
+  .card{
+    text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-s);
+    cursor:pointer;position:relative;transition:border-color .18s,transform .18s,background .18s;
+    display:flex;flex-direction:column;width:100%;padding:0;overflow:hidden;
+  }
+  .card:hover{border-color:var(--accent);transform:translateY(-2px);background:var(--surface-2)}
+  .card:focus-visible{border-color:var(--accent)}
+  .card-thumb{position:relative;aspect-ratio:16/10;background:var(--surface-2);overflow:hidden;flex:none}
+  .card-thumb svg{width:100%;height:100%;display:block}
+  .thumb-idx{position:absolute;left:8px;bottom:7px;font-family:var(--mono);font-size:.6rem;color:var(--text-dim);letter-spacing:.04em;background:rgba(13,14,19,.6);padding:2px 6px;border-radius:4px}
+  .card-content{padding:15px 17px 14px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .card h3{font-size:1rem;font-weight:700;line-height:1.25}
+  .card p{color:var(--text-dim);font-size:.8rem;line-height:1.45}
+  .card-run{margin-top:auto;padding-top:4px;display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.66rem;color:var(--accent);letter-spacing:.04em}
+  .card-run svg{width:11px;height:11px}
+
+  @media (max-width:820px){
+    .cat{grid-template-columns:1fr;gap:14px}
+    .cat-head{position:static}
+  }
+
+  /* ---- footer ---- */
+  footer{padding-block:60px 80px;border-top:1px solid var(--border);margin-top:10px}
+  footer .foot-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:30px;padding-bottom:34px;border-bottom:1px solid var(--border)}
+  footer h3{font-size:1.5rem;max-width:26ch}
+  footer .foot-links{display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:.8rem}
+  footer .foot-links a{text-decoration:none;color:var(--text-dim);transition:color .15s}
+  footer .foot-links a:hover{color:var(--accent)}
+  footer .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:22px;font-family:var(--mono);font-size:.68rem;color:var(--text-faint);letter-spacing:.04em}
+
+  /* ---- modal ---- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(6,7,10,.82);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;padding:20px;z-index:100;
+  }
+  .modal-overlay[hidden]{display:none}
+  .modal-frame{
+    width:min(440px,100%);max-height:min(88vh,720px);background:var(--bg-elev);
+    border:1px solid var(--border-hi);border-radius:var(--radius-m);overflow:hidden;
+    display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.55);
+    animation:pop .22s cubic-bezier(.2,.8,.3,1);
+  }
+  @keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+  .modal-bar{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:14px 16px;border-bottom:1px solid var(--border);flex:none;
+  }
+  .modal-bar span{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--text-dim);text-transform:uppercase}
+  .modal-close{
+    width:26px;height:26px;border-radius:50%;border:1px solid var(--border-hi);background:none;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-dim);flex:none;
+  }
+  .modal-close:hover{color:var(--text);border-color:var(--text-dim)}
+  .modal-body{padding:26px 22px;overflow-y:auto;flex:1}
+  .demo-title{font-family:var(--disp);font-weight:700;font-size:1.25rem;margin-bottom:4px}
+  .demo-desc{color:var(--text-dim);font-size:.85rem;margin-bottom:22px;line-height:1.55}
+
+  /* ---- shared demo bits ---- */
+  .d-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .d-btn{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;
+    background:var(--accent);color:var(--accent-ink);border:none;border-radius:var(--radius-s);
+    padding:11px 16px;cursor:pointer;font-weight:600;transition:opacity .15s,transform .1s;
+  }
+  .d-btn:active{transform:scale(.97)}
+  .d-btn.ghost{background:none;color:var(--text);border:1px solid var(--border-hi)}
+  .d-btn[disabled]{opacity:.35;cursor:not-allowed}
+  .d-field{width:100%;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:11px 13px;color:var(--text);font-family:var(--sans);font-size:.9rem}
+  .d-field:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .d-label{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.07em;color:var(--text-faint);display:block;margin-bottom:6px}
+  .d-check{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text-faint);transition:color .2s}
+  .d-check.ok{color:var(--good)}
+  .d-check .dot{width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;flex:none;display:flex;align-items:center;justify-content:center;font-size:9px}
+  .d-check.ok .dot{background:var(--good);border-color:var(--good);color:var(--bg-elev)}
+  .num{font-variant-numeric:tabular-nums}
+  .switch{position:relative;width:42px;height:24px;flex:none}
+  .switch input{opacity:0;width:100%;height:100%;position:absolute;margin:0;cursor:pointer}
+  .switch .track{position:absolute;inset:0;background:var(--surface-2);border:1px solid var(--border-hi);border-radius:999px;transition:.18s}
+  .switch .thumb{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--text-dim);transition:.18s}
+  .switch input:checked + .track{background:var(--accent-soft);border-color:var(--accent)}
+  .switch input:checked + .track + .thumb{transform:translateX(18px);background:var(--accent)}
+
+  .chip{display:inline-flex;align-items:center;padding:7px 13px;border-radius:999px;border:1px solid var(--border-hi);font-size:.78rem;cursor:pointer;transition:.15s;color:var(--text-dim);background:none;font-family:var(--sans)}
+  .chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .dotgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-top:16px}
+  .dotgrid .dd{width:100%;aspect-ratio:1;border-radius:5px;background:var(--surface-2);transition:.2s}
+  .dotgrid .dd.match{background:var(--accent)}
+  .dotgrid .dd.dim{opacity:.18}
+  @keyframes shimmer{0%{background-position:-200px 0}100%{background-position:200px 0}}
+  .skel{height:13px;border-radius:4px;background:linear-gradient(90deg,var(--surface-2) 0%,var(--surface) 50%,var(--surface-2) 100%);background-size:400px 100%;animation:shimmer 1.1s infinite linear}
+  .spark{display:flex;align-items:flex-end;gap:5px;height:56px;margin-top:6px}
+  .spark .sb{flex:1;background:var(--surface-2);border-radius:2px;transition:.15s}
+  .spark .sb.hi{background:var(--accent)}
+  .swatch{border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:14px;cursor:pointer;transition:.2s;text-align:center;flex:1}
+  .swatch.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .toastwrap{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+  .toast{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:10px 12px;font-size:.8rem;position:relative;overflow:hidden}
+  .toast .bar{position:absolute;left:0;bottom:0;height:2px;background:var(--accent);transition:width linear}
+  .stackcard{border:1px solid var(--border-hi);background:var(--surface);border-radius:var(--radius-m);padding:26px 18px;text-align:center;transition:transform .3s,opacity .3s}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-inner">
+    <div class="mark"><span class="dot"></span><b>SK</b>&nbsp;/ Signal &amp; State</div>
+    <nav class="top-nav">
+      <a class="ext" href="https://shouvick.design" target="_blank" rel="noopener">Portfolio ↗</a>
+      <a href="mailto:sk@shouvick.design">Say hello</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="visitor-chip">Reading as visitor <b id="visitorNo">#000,000</b></div>
+        <span class="kicker">2019 — 2026 · Field notes</span>
+        <h1>Interaction studies,<br>told in <em>state</em>.</h1>
+        <p class="hero-sub">Every screen is a machine for turning an action into a feeling.</p>
+        <p class="hero-desc">An original collection of interaction studies — how an interface confirms, waits, warns, and celebrates. Every study is live: click one to run it. Designed and built by Shouvick Koley.</p>
+        <div class="hero-meta">
+          <div><b id="statTotal">0</b><span>Studies logged</span></div>
+          <div><b id="statLive">0</b><span>Fully working</span></div>
+          <div><b id="statEngines">0</b><span>Interaction engines</span></div>
+          <div><b id="statCats">0</b><span>Domains covered</span></div>
+        </div>
+      </div>
+      <div class="hero-visual" id="heroVisual" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <nav class="jumpnav">
+    <div class="wrap jumpnav-inner" id="jumpnavInner"></div>
+  </nav>
+
+  <div class="wrap" id="categories"></div>
+
+  <footer class="wrap">
+    <div class="foot-top">
+      <h3>Have a state worth designing? Let's build the machine behind it.</h3>
+      <div class="foot-links">
+        <a href="mailto:sk@shouvick.design">sk@shouvick.design</a>
+        <a href="https://shouvick.design" target="_blank" rel="noopener">shouvick.design ↗</a>
+        <a href="https://www.linkedin.com/in/skoley" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Design &amp; build — Shouvick Koley</span>
+      <span>An independent study of interaction-design craft, built as an original gallery</span>
+    </div>
+  </footer>
+</main>
+
+<div class="modal-overlay" id="modalOverlay" hidden>
+  <div class="modal-frame" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-bar">
+      <span id="modalKicker">Study</span>
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------------------------------------------------
+     Content — every title/description below is original,
+     written for this page (not sourced from any other site).
+     Each item names an "engine" — either a bespoke build or
+     one of the shared, reusable interaction mechanics below.
+  --------------------------------------------------------- */
+  var DATA = [
+  {name:"Featured", items:[
+    {t:"Session Player", d:"A mini player opens into a full transport view, arriving in sequence.", demo:"session"},
+    {t:"Inline Sign-in", d:"Email and password confirm live; continue wakes once everything's valid.", demo:"signin"},
+    {t:"Split-Screen Compare", d:"Two options sit side by side; the one you touch gets the weight.", demo:"compare"},
+    {t:"Undo Toast", d:"A destructive action completes but stays reversible for a few seconds.", demo:"toast"},
+    {t:"Drag to Reorder", d:"Rows lift and shift the moment you grab them, then settle.", demo:"reorder"},
+    {t:"Pull to Refresh", d:"The list detaches under a pull, releasing once new data lands.", demo:"skeleton"},
+    {t:"Skeleton to Content", d:"Grey blocks hold the loading shape so content never jumps in.", demo:"skeleton"},
+    {t:"Long-Press Actions", d:"Holding a row a beat longer fans out its hidden actions.", demo:"longpress"},
+    {t:"Segmented State", d:"A row's status moves through a colored control, not a dropdown.", demo:"segmented"},
+    {t:"Toast Stack", d:"Notifications queue instead of colliding, oldest fading first.", demo:"toast"},
+    {t:"Empty State Nudge", d:"An empty list shows the one action that would fill it.", demo:"empty"},
+    {t:"Clean Completion", d:"Completion lands as one clean checkmark and a number.", demo:"countup"}
+  ]},
+  {name:"Business", items:[
+    {t:"Task Ledger", d:"Checking a task strikes it through and sinks it below the rest.", demo:"tasks"},
+    {t:"Passphrase Strength", d:"Rules tick off live as a password meets them, bar filling in step.", demo:"password"},
+    {t:"Progressive Profile", d:"Summary rows expand into edit fields in place, context never lost.", demo:"accordion"},
+    {t:"Pipeline Stages", d:"Candidate cards slide between stages, the funnel readable at a glance.", demo:"reorder"},
+    {t:"Quick Capture", d:"A single line grows into a full note the moment it needs to.", demo:"reveal"},
+    {t:"Completeness Meter", d:"An unfinished profile carries a meter showing how close it is.", demo:"checklist"},
+    {t:"Clause Review", d:"Each clause's status sets with a small colored control in the margin.", demo:"segmented"},
+    {t:"Sizing Stepper", d:"A team-size stepper rescales the recommended plan and price live.", demo:"slider"},
+    {t:"Collapsing Sections", d:"Finished sections collapse into one line, keeping the form short.", demo:"accordion"},
+    {t:"Hover Preview", d:"Selecting a template animates its layout into a live skeleton first.", demo:"compare"},
+    {t:"Share Permissions", d:"Each added person becomes a chip with its own permission.", demo:"chips"},
+    {t:"Reordering KPIs", d:"Tiles reorder by how much they've moved since the last refresh.", demo:"reorder"},
+    {t:"Inline Slot Editor", d:"Tapping a calendar slot opens its editor anchored to that cell.", demo:"accordion"},
+    {t:"Checklist Delivery", d:"Onboarding tasks arrive one card at a time, ticking off cleanly.", demo:"checklist"},
+    {t:"Swipe to Triage", d:"High-volume review works as a swipe, the stack refilling itself.", demo:"swipe"},
+    {t:"Radial Row Menu", d:"A long-press surfaces a row's actions in a small arc.", demo:"longpress"}
+  ]},
+  {name:"Finance", items:[
+    {t:"Split the Tab", d:"Diners and tip both feed one live total — no mental math.", demo:"split"},
+    {t:"Freeze Card", d:"One toggle frosts a card over and halts spending instantly.", demo:"freeze"},
+    {t:"Filtered Ledger", d:"Toggling a category re-flows transactions with a stagger, not a swap.", demo:"chips"},
+    {t:"Status Chip Chase", d:"A request's chip moves from requested to seen to paid.", demo:"segmented"},
+    {t:"Card in Motion", d:"Adding a card by camera pre-fills fields as it renders itself.", demo:"reveal"},
+    {t:"Masked Key Entry", d:"A wallet's key masks per character and shakes on rejection.", demo:"masked"},
+    {t:"Counted Reveal", d:"A portfolio total counts up before its breakdown appears beneath.", demo:"countup"},
+    {t:"Scan to Pay", d:"A QR scan resolves straight into a pre-filled payment sheet.", demo:"skeleton"},
+    {t:"Contextual Permission", d:"A prompt explains what it needs before offering allow or deny.", demo:"reveal"},
+    {t:"Offer Sheet", d:"An eligible loan slides up as a sheet with terms inline.", demo:"accordion"},
+    {t:"Compared Tiers", d:"The chosen plan expands while the others dim beside it.", demo:"compare"},
+    {t:"Aggregating Score", d:"A health score fills in as linked accounts sync.", demo:"countup"},
+    {t:"Goal Framing", d:"A savings goal opens with its target and deadline paired.", demo:"reveal"},
+    {t:"Filtering Picker", d:"A bank picker narrows as you type, logo confirming first.", demo:"chips"},
+    {t:"Filled Goal", d:"A hit goal fills completely and reports its total at once.", demo:"countup"},
+    {t:"Explained Automation", d:"A savings toggle states its own schedule right in the row.", demo:"reveal"},
+    {t:"Scrubbable History", d:"Dragging across a graph scrubs its date and total together.", demo:"scrub"},
+    {t:"Live Withdrawal Warning", d:"Pulling from a goal drains its level and warns of risk.", demo:"slider"},
+    {t:"Assembling Bucket", d:"Naming a goal builds its card live as you type.", demo:"reveal"},
+    {t:"Archived Wins", d:"Finished goals collapse into one strip, out of the active view.", demo:"accordion"},
+    {t:"Returning Balance", d:"A refund flies back into its bucket as the total re-counts.", demo:"countup"},
+    {t:"Custom Keypad Preview", d:"A keypad previews the due-date impact of every digit typed.", demo:"slider"},
+    {t:"Draining Ring Timer", d:"A limited rate counts down inside a draining ring, not a banner.", demo:"ring"},
+    {t:"Split Slider", d:"One slider divides an amount between spending and saving live.", demo:"dualslider"}
+  ]},
+  {name:"Food", items:[
+    {t:"Add to Order", d:"An item flies to the order icon and the badge bumps.", demo:"cart"},
+    {t:"Table Map Select", d:"Touching a seating map highlights what's actually available.", demo:"compare"},
+    {t:"Persistent Summary Bar", d:"Seat, time, and table resolve while a summary bar stays pinned.", demo:"accordion"},
+    {t:"Progressive Dish Grid", d:"Results stream in as images finish loading, browsing starts early.", demo:"skeleton"},
+    {t:"Anchored Filter Chips", d:"Cuisine chips reflow the grid, favorites staying anchored in place.", demo:"chips"},
+    {t:"Mode-Preserving Auth", d:"Switching sign-in and registration swaps the card, cart untouched.", demo:"segmented"},
+    {t:"Converging Avatars", d:"A group order shows participants drifting toward a shared cart.", demo:"reveal"},
+    {t:"Pinned Step Cooking", d:"A recipe's current step stays pinned while ingredients check off.", demo:"accordion"},
+    {t:"Inline Review Expansion", d:"Ratings expand into a full review list with no page load.", demo:"accordion"},
+    {t:"Distance-Framed Rewards", d:"Points accumulate along a path, progress framed as distance.", demo:"slider"}
+  ]},
+  {name:"Health", items:[
+    {t:"Body Metrics", d:"Height and weight sliders update a BMI figure and its category.", demo:"bmi"},
+    {t:"Calorie Ring Fill", d:"Logging a meal fills its calorie ring in place.", demo:"checklist"},
+    {t:"Tap-Card Selection", d:"Profile basics use large tappable cards instead of a dropdown.", demo:"compare"},
+    {t:"Plain-Language Schedule", d:"A medication schedule builds itself in plain language as you tap.", demo:"chips"},
+    {t:"Flip to Taken", d:"Marking a dose taken flips its card to a checkmark.", demo:"reveal"},
+    {t:"Scannable Check-in", d:"A clinic visit confirms with a scannable code reveal.", demo:"skeleton"},
+    {t:"Assembled Booking", d:"Stylist, treatment, and time assemble into one running summary.", demo:"accordion"},
+    {t:"Symptom Timeline", d:"Logged symptoms plot onto a simple, readable timeline.", demo:"scrub"}
+  ]},
+  {name:"Travel", items:[
+    {t:"Courier En Route", d:"A courier dot moves along its route as the ETA counts down.", demo:"courier"},
+    {t:"Drag-to-Reorder Itinerary", d:"Flights, stays, and activities stack, dragging a day into place.", demo:"reorder"},
+    {t:"Configured, Not Just Booked", d:"After booking, temperature and conversation preferences surface as toggles.", demo:"chips"},
+    {t:"Inline App Pitch", d:"An integration explains what it does before offering to install.", demo:"accordion"},
+    {t:"Ticking Confirmation", d:"Payment and delivery confirm as two states, each ticking green.", demo:"checklist"},
+    {t:"Priced Trade-off", d:"Choosing pickup over courier re-prices the order, difference labeled.", demo:"compare"},
+    {t:"Synced Address Entry", d:"Typing an address fills candidates as the map pin follows.", demo:"reveal"},
+    {t:"Itemized Fare", d:"A fare breaks into base, distance, and surge before confirming.", demo:"accordion"}
+  ]},
+  {name:"Media", items:[
+    {t:"Plan Comparison", d:"Toggling monthly and yearly re-prices every tier live.", demo:"pricing"},
+    {t:"Time-Sliced Guide", d:"A schedule scrubs horizontally through time while rows stay fixed.", demo:"scrub"},
+    {t:"Proximity Relevance", d:"Nearby events lift as they near the center of the screen.", demo:"compare"},
+    {t:"Cover Collage Viewer", d:"Photos stack into a collage that opens into a full viewer.", demo:"skeleton"},
+    {t:"Self-Assembling Feed", d:"Category tiles morph into a settled masonry grid on arrival.", demo:"skeleton"},
+    {t:"Shrinking Decision Deck", d:"Group voting narrows options through swipes until one remains.", demo:"swipe"},
+    {t:"Preserved Scroll Refine", d:"Filtering cross-fades the grid while scroll position holds steady.", demo:"chips"},
+    {t:"Fanning Map Discovery", d:"Nearby results fan out from a map pin, sorted by distance.", demo:"longpress"}
+  ]},
+  {name:"Shopping", items:[
+    {t:"Press to Preview", d:"Holding a card reveals sizing and add-to-cart in place.", demo:"press"},
+    {t:"Wrist-Scaled Carousel", d:"A wearable's carousel previews items at wrist scale with a tick.", demo:"scrub"},
+    {t:"Preserved Filter State", d:"Filters cross-fade the catalog while scroll position holds.", demo:"chips"},
+    {t:"Long-Press Quick Add", d:"A long press exposes size and quantity, skipping the full page.", demo:"longpress"},
+    {t:"Live Total Assembly", d:"Cart items assemble a running total in a persistent strip.", demo:"countup"},
+    {t:"Size-Aware Add", d:"Picking a size updates the add-to-cart button's own label.", demo:"compare"}
+  ]},
+  {name:"Social", items:[
+    {t:"Threaded Presence", d:"A message lifts into the thread, typing bridges the wait.", demo:"chat"},
+    {t:"Sticky Section Scroll", d:"Contact group headers stick while scrolling, hierarchy intact.", demo:"accordion"},
+    {t:"Branded Load Sequence", d:"A splash mark assembles from fragments while content preloads.", demo:"skeleton"},
+    {t:"Reaction Burst", d:"Tapping to react bursts the emoji up before settling into a count.", demo:"countup"},
+    {t:"Presence Dot Sync", d:"A contact's presence dot shifts color the instant status changes.", demo:"segmented"},
+    {t:"Story Ring Progress", d:"A story's ring fills segment by segment in real time.", demo:"ring"}
+  ]},
+  {name:"Productivity", items:[
+    {t:"Settings Drawer", d:"Sections expand inline instead of pushing a new page.", demo:"drawer"},
+    {t:"Auto-Save Rule", d:"A savings toggle states its own schedule right in its row.", demo:"autosave"},
+    {t:"Hub Radial Menu", d:"A service menu fans out from a central hub icon.", demo:"longpress"},
+    {t:"Signature to Stamp", d:"Completing a signature stamps approval directly onto the document.", demo:"reveal"},
+    {t:"Self-Archiving List", d:"Completed tasks archive themselves with a stagger, list shrinking down.", demo:"checklist"},
+    {t:"Living Checklist", d:"Requirements check themselves off live as each one is satisfied.", demo:"checklist"},
+    {t:"Negotiable Balance", d:"A bill resolves into a plan — balance, due date, options.", demo:"accordion"},
+    {t:"Live Transcription", d:"Spoken words appear as they're said, keeping pace with talk.", demo:"typing"},
+    {t:"Live Payout Calc", d:"Hours worked update a payout figure, overtime highlighted as crossed.", demo:"slider"},
+    {t:"Cycle State Mirror", d:"A wash cycle animates through soak, wash, and rinse states.", demo:"segmented"},
+    {t:"Spec-to-Advice Slider", d:"Room specs translate directly into a recommended capacity live.", demo:"dualslider"},
+    {t:"Pinned Progress Stack", d:"Onboarding tasks pin into a stack, checking off one at a time.", demo:"checklist"}
+  ]}
+  ];
+
+  /* ---------------------------------------------------------
+     Icon glyphs — one small line-icon per interaction engine,
+     drawn in a 24x24 box. Used on every card's thumbnail.
+  --------------------------------------------------------- */
+  var ICONS = {
+    session:'<path d="M9 7v10l9-5z" fill="currentColor" stroke="none"/>',
+    signin:'<path d="M14 4h4a2 2 0 012 2v12a2 2 0 01-2 2h-4"/><path d="M10 8l4 4-4 4"/><line x1="14" y1="12" x2="3" y2="12"/>',
+    tasks:'<path d="M5 13l4 4L19 7"/>',
+    password:'<rect x="6" y="11" width="12" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',
+    split:'<line x1="4" y1="12" x2="20" y2="12"/><circle cx="12" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="18" r="1.4" fill="currentColor" stroke="none"/>',
+    freeze:'<line x1="12" y1="3" x2="12" y2="21"/><line x1="4.5" y1="7.5" x2="19.5" y2="16.5"/><line x1="19.5" y1="7.5" x2="4.5" y2="16.5"/>',
+    cart:'<path d="M4 8h16l-1.5 9a2 2 0 01-2 1.7H7.5A2 2 0 015.5 17z"/><path d="M8 8V6a4 4 0 018 0v2"/>',
+    bmi:'<path d="M4 16a8 8 0 0116 0"/><line x1="12" y1="16" x2="16" y2="11"/><circle cx="12" cy="16" r="1" fill="currentColor" stroke="none"/>',
+    courier:'<path d="M6 18C10 18 10 6 18 6" stroke-dasharray="2.5 3"/><circle cx="6" cy="18" r="2" fill="currentColor" stroke="none"/><circle cx="18" cy="6" r="2"/>',
+    pricing:'<path d="M20 12l-8 8-9-9V4h7z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor" stroke="none"/>',
+    press:'<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7" opacity=".5"/><circle cx="12" cy="12" r="10" opacity=".25"/>',
+    chat:'<path d="M4 5h16v10H9l-4 4V15H4z"/>',
+    drawer:'<path d="M6 9l6 6 6-6"/>',
+    autosave:'<path d="M4 12a8 8 0 0114-5"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 01-14 5"/><path d="M4 20v-4h4"/>',
+    reveal:'<rect x="3" y="8" width="18" height="8" rx="4"/><circle cx="15" cy="12" r="3" fill="currentColor" stroke="none"/>',
+    slider:'<line x1="4" y1="12" x2="20" y2="12"/><circle cx="14" cy="12" r="3" fill="currentColor" stroke="none"/>',
+    dualslider:'<line x1="4" y1="8" x2="20" y2="8"/><circle cx="9" cy="8" r="2.2" fill="currentColor" stroke="none"/><line x1="4" y1="16" x2="20" y2="16"/><circle cx="16" cy="16" r="2.2" fill="currentColor" stroke="none"/>',
+    checklist:'<path d="M4 6l2 2 3-3"/><line x1="11" y1="6" x2="20" y2="6"/><path d="M4 12l2 2 3-3"/><line x1="11" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18" opacity=".4"/>',
+    reorder:'<line x1="4" y1="7" x2="14" y2="7"/><line x1="4" y1="12" x2="18" y2="12"/><line x1="4" y1="17" x2="11" y2="17"/><path d="M19 8l2-2 2 2M19 16l2 2 2-2"/>',
+    accordion:'<line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="11" x2="20" y2="11"/><rect x="4" y="14" width="16" height="6" rx="1"/>',
+    segmented:'<rect x="3" y="9" width="18" height="6" rx="3"/><line x1="9" y1="9" x2="9" y2="15"/><line x1="15" y1="9" x2="15" y2="15"/>',
+    chips:'<rect x="3" y="7" width="8" height="5" rx="2.5"/><rect x="13" y="7" width="8" height="5" rx="2.5"/><rect x="6" y="14" width="8" height="5" rx="2.5"/>',
+    countup:'<line x1="5" y1="19" x2="5" y2="14"/><line x1="10" y1="19" x2="10" y2="10"/><line x1="15" y1="19" x2="15" y2="7"/><line x1="20" y1="19" x2="20" y2="4"/>',
+    compare:'<rect x="3" y="5" width="8" height="14" rx="1"/><rect x="13" y="5" width="8" height="14" rx="1" opacity=".45"/>',
+    longpress:'<circle cx="12" cy="15" r="2.6"/><circle cx="6" cy="7" r="1.6" opacity=".7"/><circle cx="12" cy="5" r="1.6" opacity=".7"/><circle cx="18" cy="7" r="1.6" opacity=".7"/>',
+    scrub:'<path d="M3 12h2l2-6 3 12 3-9 3 6 2-3h3"/>',
+    ring:'<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 018 8" stroke-width="2.6"/>',
+    typing:'<line x1="4" y1="17" x2="20" y2="17"/><line x1="6" y1="12" x2="14" y2="12"/><line x1="17" y1="9" x2="17" y2="15"/>',
+    masked:'<rect x="6" y="11" width="12" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/><circle cx="10" cy="15.5" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="15.5" r="1" fill="currentColor" stroke="none"/>',
+    toast:'<rect x="3" y="8" width="18" height="7" rx="2"/><line x1="6" y1="11.5" x2="14" y2="11.5"/>',
+    skeleton:'<line x1="4" y1="7" x2="20" y2="7" stroke-dasharray="2 3"/><line x1="4" y1="12" x2="16" y2="12" stroke-dasharray="2 3"/><line x1="4" y1="17" x2="18" y2="17" stroke-dasharray="2 3"/>',
+    empty:'<rect x="4" y="4" width="16" height="16" rx="2" stroke-dasharray="3 3"/><line x1="12" y1="9" x2="12" y2="15"/><line x1="9" y1="12" x2="15" y2="12"/>',
+    swipe:'<rect x="6" y="4" width="12" height="16" rx="2" opacity=".35"/><rect x="4" y="6" width="12" height="14" rx="2"/>'
+  };
+
+  function hashStr(s){
+    var h = 0;
+    for (var i = 0; i < s.length; i++){ h = (Math.imul(31, h) + s.charCodeAt(i)) | 0; }
+    return Math.abs(h);
+  }
+
+  function cardThumb(item, n){
+    var h = hashStr(item.t);
+    var angle = h % 180;
+    var spacing = 7 + (h % 3) * 5;
+    var pid = "p" + n;
+    var icon = ICONS[item.demo] || ICONS.reveal;
+    return '' +
+      '<div class="card-thumb">' +
+        '<svg viewBox="0 0 220 132" preserveAspectRatio="xMidYMid slice">' +
+          '<defs><pattern id="' + pid + '" width="' + spacing + '" height="' + spacing + '" patternTransform="rotate(' + angle + ')" patternUnits="userSpaceOnUse">' +
+            '<line x1="0" y1="0" x2="0" y2="' + spacing + '" stroke="var(--border-hi)" stroke-width="1"/>' +
+          '</pattern></defs>' +
+          '<rect width="220" height="132" fill="var(--surface-2)"/>' +
+          '<rect width="220" height="132" fill="url(#' + pid + ')" opacity=".55"/>' +
+          '<g transform="translate(110,66) scale(2.6) translate(-12,-12)" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + icon + '</g>' +
+        '</svg>' +
+        '<span class="thumb-idx">N°' + String(n).padStart(3,"0") + '</span>' +
+      '</div>';
+  }
+
+  /* ---------------------------------------------------------
+     Render gallery
+  --------------------------------------------------------- */
+  var root = document.getElementById("categories");
+  var jump = document.getElementById("jumpnavInner");
+  var totalCount = 0, n = 0;
+
+  DATA.forEach(function(cat, ci){
+    var slug = "cat-" + cat.name.toLowerCase();
+    totalCount += cat.items.length;
+
+    var jl = document.createElement("a");
+    jl.href = "#" + slug;
+    jl.innerHTML = cat.name + "<b>" + String(cat.items.length).padStart(2,"0") + "</b>";
+    jump.appendChild(jl);
+
+    var section = document.createElement("section");
+    section.className = "cat";
+    section.id = slug;
+
+    var head = document.createElement("div");
+    head.className = "cat-head";
+    head.innerHTML =
+      '<div class="cat-index">' + String(ci+1).padStart(2,"0") + " / " + String(DATA.length).padStart(2,"0") + '</div>' +
+      '<h2>' + cat.name + '</h2>' +
+      '<span class="cat-count">' + cat.items.length + ' studies</span>';
+    section.appendChild(head);
+
+    var grid = document.createElement("div");
+    grid.className = "grid";
+
+    cat.items.forEach(function(item){
+      n++;
+      var card = document.createElement("button");
+      card.type = "button";
+      card.className = "card";
+      card.dataset.engine = item.demo;
+      card.dataset.index = n;
+      card.innerHTML =
+        cardThumb(item, n) +
+        '<div class="card-content">' +
+          '<div class="card-top"><h3>' + item.t + '</h3></div>' +
+          '<p>' + item.d + '</p>' +
+          '<span class="card-run"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Run this study</span>' +
+        '</div>';
+      grid.appendChild(card);
+    });
+
+    section.appendChild(grid);
+    root.appendChild(section);
+  });
+
+  document.getElementById("statTotal").textContent = totalCount + "+";
+  document.getElementById("statLive").textContent = totalCount;
+  document.getElementById("statCats").textContent = DATA.length;
+
+  try {
+    var seed = Math.floor(100000 + Math.random() * 800000);
+    document.getElementById("visitorNo").textContent = "#" + seed.toLocaleString("en-US");
+  } catch(e){}
+
+  /* ---------------------------------------------------------
+     Hero visual — an original diagram: four interaction states
+     wired into a central state engine.
+  --------------------------------------------------------- */
+  (function(){
+    var mount = document.getElementById("heroVisual");
+    var nodes = [
+      {x:95,  y:95,  icon:ICONS.checklist, label:"CONFIRM"},
+      {x:305, y:95,  icon:ICONS.chat,      label:"WAIT"},
+      {x:95,  y:305, icon:ICONS.toast,     label:"WARN"},
+      {x:305, y:305, icon:ICONS.countup,   label:"CELEBRATE"}
+    ];
+    var svg = '<svg viewBox="0 0 400 400" role="img" aria-label="Diagram connecting four interaction states to a central state engine">' +
+      '<defs><pattern id="heroGrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="var(--border)" stroke-width="1"/></pattern></defs>' +
+      '<rect width="400" height="400" fill="url(#heroGrid)"/>' +
+      '<g stroke="var(--border-hi)" stroke-width="1.2">' +
+        '<line x1="95" y1="95" x2="182" y2="182"/><line x1="305" y1="95" x2="218" y2="182"/>' +
+        '<line x1="95" y1="305" x2="182" y2="218"/><line x1="305" y1="305" x2="218" y2="218"/>' +
+      '</g>' +
+      '<circle cx="200" cy="200" r="70" fill="var(--bg-elev)" stroke="var(--border-hi)" stroke-width="1.5"/>' +
+      '<circle class="hero-arc" cx="200" cy="200" r="70" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="140 380"/>' +
+      '<g transform="translate(200,200) scale(1.9) translate(-12,-12)" fill="var(--text)" stroke="none">' + ICONS.session + '</g>' +
+      '<text x="200" y="288" text-anchor="middle" font-size="10" fill="var(--text-faint)" letter-spacing="1.5">STATE ENGINE</text>';
+    nodes.forEach(function(nd){
+      svg += '<g>' +
+        '<circle cx="' + nd.x + '" cy="' + nd.y + '" r="30" fill="var(--surface)" stroke="var(--border-hi)"/>' +
+        '<g transform="translate(' + nd.x + ',' + nd.y + ') scale(1.3) translate(-12,-12)" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + nd.icon + '</g>' +
+        '<text x="' + nd.x + '" y="' + (nd.y + 45) + '" text-anchor="middle" font-size="9" fill="var(--text-faint)" letter-spacing="1.5">' + nd.label + '</text>' +
+      '</g>';
+    });
+    svg += '<text x="20" y="388" font-size="9" fill="var(--text-faint)" letter-spacing="1.5">FIG. 01 — STATE MAP</text></svg>';
+    mount.innerHTML = svg;
+  })();
+
+  /* ---------------------------------------------------------
+     Modal plumbing — reads title/description straight off the
+     clicked card, then mounts that card's interaction engine.
+  --------------------------------------------------------- */
+  var overlay = document.getElementById("modalOverlay");
+  var modalBody = document.getElementById("modalBody");
+  var modalKicker = document.getElementById("modalKicker");
+  var lastFocus = null;
+
+  function openModal(card){
+    var engineId = card.dataset.engine;
+    var engine = ENGINES[engineId];
+    var title = card.querySelector("h3").textContent;
+    var desc = card.querySelector("p").textContent;
+    modalKicker.textContent = "Study / " + String(card.dataset.index).padStart(3,"0");
+    modalBody.innerHTML =
+      '<div class="demo-title">' + title + '</div>' +
+      '<div class="demo-desc">' + desc + '</div>' +
+      engine.html;
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    document.body.style.overflow = "hidden";
+    if (engine.init) engine.init(modalBody);
+    document.getElementById("modalClose").focus();
+  }
+  function closeModal(){
+    overlay.hidden = true;
+    document.body.style.overflow = "";
+    modalBody.innerHTML = "";
+    if (lastFocus) lastFocus.focus();
+  }
+  document.getElementById("modalClose").addEventListener("click", closeModal);
+  overlay.addEventListener("click", function(e){ if (e.target === overlay) closeModal(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && !overlay.hidden) closeModal(); });
+  root.addEventListener("click", function(e){
+    var card = e.target.closest(".card");
+    if (card) openModal(card);
+  });
+
+  /* ---------------------------------------------------------
+     Engines — each returns {html, init}. Fourteen are bespoke
+     builds; the rest are shared, reusable mechanics that many
+     studies above point to (the way a real component library
+     is reused across many product flows).
+  --------------------------------------------------------- */
+  var ENGINES = {};
+
+  ENGINES.session = {
+    html:
+      '<div id="sp-mini" style="display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:10px 12px;cursor:pointer">' +
+        '<div style="width:38px;height:38px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#c23a12);flex:none"></div>' +
+        '<div style="flex:1;min-width:0"><div style="font-size:.85rem;font-weight:600">Interval Study No. 4</div><div style="font-size:.72rem;color:var(--text-faint)">Field Recordings</div></div>' +
+        '<button class="d-btn" id="sp-play-mini" style="padding:8px 12px">▶</button>' +
+      '</div>' +
+      '<div id="sp-full" style="display:none;text-align:center;margin-top:4px">' +
+        '<div style="width:180px;height:180px;margin:0 auto;border-radius:14px;background:linear-gradient(135deg,var(--accent),#c23a12);box-shadow:0 20px 40px rgba(255,106,57,.25)"></div>' +
+        '<div style="margin-top:18px;font-weight:600">Interval Study No. 4</div>' +
+        '<div style="font-size:.8rem;color:var(--text-faint);margin-top:2px">Field Recordings</div>' +
+        '<div style="height:3px;background:var(--surface-2);border-radius:3px;margin-top:20px;overflow:hidden"><div id="sp-bar" style="height:100%;width:0%;background:var(--accent);transition:width .1s linear"></div></div>' +
+        '<div class="d-row" style="margin-top:22px;justify-content:center;gap:26px;opacity:0;transition:opacity .4s" id="sp-controls">' +
+          '<button class="d-btn ghost" id="sp-back" style="border-radius:50%;width:40px;height:40px;padding:0">⏮</button>' +
+          '<button class="d-btn" id="sp-play-full" style="border-radius:50%;width:52px;height:52px;padding:0;font-size:1.1rem">▶</button>' +
+          '<button class="d-btn ghost" id="sp-fwd" style="border-radius:50%;width:40px;height:40px;padding:0">⏭</button>' +
+        '</div>' +
+        '<button class="d-btn ghost" id="sp-collapse" style="margin-top:20px">Collapse</button>' +
+      '</div>',
+    init:function(root){
+      var mini = root.querySelector("#sp-mini"), full = root.querySelector("#sp-full");
+      var playing = false, timer = null, pct = 32;
+      function paint(){ root.querySelectorAll("#sp-play-mini,#sp-play-full").forEach(function(b){ b.textContent = playing ? "❚❚" : "▶"; }); }
+      function tick(){ pct += 0.6; if (pct >= 100) pct = 0; root.querySelector("#sp-bar").style.width = pct + "%"; }
+      function toggle(){
+        playing = !playing; paint();
+        if (playing){ timer = setInterval(tick, 120); } else { clearInterval(timer); }
+      }
+      function expand(){
+        mini.style.display = "none"; full.style.display = "block";
+        root.querySelector("#sp-bar").style.width = pct + "%";
+        setTimeout(function(){ root.querySelector("#sp-controls").style.opacity = 1; }, 90);
+      }
+      mini.addEventListener("click", expand);
+      root.querySelector("#sp-play-mini").addEventListener("click", function(e){ e.stopPropagation(); toggle(); });
+      root.querySelector("#sp-play-full").addEventListener("click", toggle);
+      root.querySelector("#sp-collapse").addEventListener("click", function(){ full.style.display = "none"; mini.style.display = "flex"; root.querySelector("#sp-controls").style.opacity = 0; });
+    }
+  };
+
+  ENGINES.signin = {
+    html:
+      '<label class="d-label" for="si-email">Email</label>' +
+      '<input class="d-field" id="si-email" type="text" placeholder="you@studio.com" style="margin-bottom:6px">' +
+      '<div class="d-check" id="si-email-check" style="margin-bottom:16px"><span class="dot">✓</span> Looks like a real email</div>' +
+      '<label class="d-label" for="si-pass">Password</label>' +
+      '<input class="d-field" id="si-pass" type="password" placeholder="At least 8 characters" style="margin-bottom:6px">' +
+      '<div class="d-check" id="si-pass-check" style="margin-bottom:22px"><span class="dot">✓</span> 8 characters or more</div>' +
+      '<button class="d-btn" id="si-submit" disabled style="width:100%">Continue</button>',
+    init:function(root){
+      var email = root.querySelector("#si-email"), pass = root.querySelector("#si-pass");
+      var ec = root.querySelector("#si-email-check"), pc = root.querySelector("#si-pass-check");
+      var submit = root.querySelector("#si-submit");
+      function validate(){
+        var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+        var passOk = pass.value.length >= 8;
+        ec.classList.toggle("ok", emailOk);
+        pc.classList.toggle("ok", passOk);
+        submit.disabled = !(emailOk && passOk);
+      }
+      email.addEventListener("input", validate);
+      pass.addEventListener("input", validate);
+      submit.addEventListener("click", function(){ submit.textContent = "Continuing ✓"; });
+    }
+  };
+
+  ENGINES.tasks = {
+    html:
+      '<div id="tl-open" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px"></div>' +
+      '<div style="font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint);margin-bottom:8px">Done</div>' +
+      '<div id="tl-done" style="display:flex;flex-direction:column;gap:8px"></div>',
+    init:function(root){
+      var items = ["Wireframe the empty states","Tune the spring easing","Write the onboarding copy","Ship the dark palette","Record the handoff notes"];
+      var openList = root.querySelector("#tl-open"), doneList = root.querySelector("#tl-done");
+      function row(text){
+        var el = document.createElement("label");
+        el.style.cssText = "display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:10px 12px;cursor:pointer;transition:opacity .2s";
+        el.innerHTML = '<input type="checkbox" style="width:16px;height:16px;accent-color:var(--accent)"><span style="font-size:.86rem">' + text + '</span>';
+        var span = el.querySelector("span"), box = el.querySelector("input");
+        box.addEventListener("change", function(){
+          span.style.textDecoration = box.checked ? "line-through" : "none";
+          span.style.color = box.checked ? "var(--text-faint)" : "var(--text)";
+          el.style.opacity = ".01";
+          setTimeout(function(){
+            (box.checked ? doneList : openList).appendChild(el);
+            el.style.opacity = "1";
+          }, 160);
+        });
+        return el;
+      }
+      items.forEach(function(t){ openList.appendChild(row(t)); });
+    }
+  };
+
+  ENGINES.password = {
+    html:
+      '<input class="d-field" id="pw-input" type="text" placeholder="Type a passphrase…" style="margin-bottom:14px">' +
+      '<div style="display:flex;gap:5px;margin-bottom:16px" id="pw-bar">' +
+        '<span style="height:5px;flex:1;border-radius:3px;background:var(--surface-2)"></span>' +
+        '<span style="height:5px;flex:1;border-radius:3px;background:var(--surface-2)"></span>' +
+        '<span style="height:5px;flex:1;border-radius:3px;background:var(--surface-2)"></span>' +
+        '<span style="height:5px;flex:1;border-radius:3px;background:var(--surface-2)"></span>' +
+      '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:8px">' +
+        '<div class="d-check" data-r="len"><span class="dot">✓</span> 8+ characters</div>' +
+        '<div class="d-check" data-r="up"><span class="dot">✓</span> One uppercase letter</div>' +
+        '<div class="d-check" data-r="num"><span class="dot">✓</span> One number</div>' +
+        '<div class="d-check" data-r="sym"><span class="dot">✓</span> One symbol</div>' +
+      '</div>',
+    init:function(root){
+      var input = root.querySelector("#pw-input");
+      var bars = root.querySelectorAll("#pw-bar span");
+      var colors = ["var(--bad)","var(--bad)","var(--warn)","var(--good)"];
+      input.addEventListener("input", function(){
+        var v = input.value;
+        var rules = { len: v.length >= 8, up: /[A-Z]/.test(v), num: /[0-9]/.test(v), sym: /[^A-Za-z0-9]/.test(v) };
+        var passed = 0;
+        Object.keys(rules).forEach(function(k){
+          var el = root.querySelector('[data-r="' + k + '"]');
+          el.classList.toggle("ok", rules[k]);
+          if (rules[k]) passed++;
+        });
+        bars.forEach(function(b, i){ b.style.background = i < passed ? colors[Math.min(passed,4)-1] : "var(--surface-2)"; });
+      });
+    }
+  };
+
+  ENGINES.split = {
+    html:
+      '<div class="d-row" style="margin-bottom:18px"><span style="font-size:.85rem;color:var(--text-dim)">Bill total</span><span class="num" style="font-family:var(--disp);font-size:1.6rem;font-weight:700">$86.40</span></div>' +
+      '<div class="d-row" style="margin-bottom:10px"><span class="d-label" style="margin:0">Diners</span>' +
+        '<div style="display:flex;align-items:center;gap:12px"><button class="d-btn ghost" id="sp-minus" style="padding:4px 12px">–</button><span class="num" id="sp-count" style="min-width:16px;text-align:center">3</span><button class="d-btn ghost" id="sp-plus" style="padding:4px 12px">+</button></div>' +
+      '</div>' +
+      '<div style="margin-bottom:20px">' +
+        '<div class="d-row"><span class="d-label" style="margin:0">Tip</span><span class="num" id="sp-tip-val">18%</span></div>' +
+        '<input type="range" id="sp-tip" min="0" max="30" value="18" style="width:100%;accent-color:var(--accent);margin-top:8px">' +
+      '</div>' +
+      '<div style="background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:16px;text-align:center">' +
+        '<div class="d-label">Each person pays</div>' +
+        '<div class="num" id="sp-each" style="font-family:var(--disp);font-size:2rem;font-weight:700;color:var(--accent)">$0.00</div>' +
+      '</div>',
+    init:function(root){
+      var bill = 86.40, count = 3, tip = 18;
+      var countEl = root.querySelector("#sp-count"), tipVal = root.querySelector("#sp-tip-val"), each = root.querySelector("#sp-each");
+      function paint(){
+        countEl.textContent = count;
+        tipVal.textContent = tip + "%";
+        each.textContent = "$" + ((bill * (1 + tip/100)) / count).toFixed(2);
+      }
+      root.querySelector("#sp-minus").addEventListener("click", function(){ count = Math.max(1, count - 1); paint(); });
+      root.querySelector("#sp-plus").addEventListener("click", function(){ count = Math.min(12, count + 1); paint(); });
+      root.querySelector("#sp-tip").addEventListener("input", function(e){ tip = +e.target.value; paint(); });
+      paint();
+    }
+  };
+
+  ENGINES.freeze = {
+    html:
+      '<div id="fz-card" style="position:relative;height:130px;border-radius:14px;background:linear-gradient(135deg,#2a2c38,#15161d);border:1px solid var(--border-hi);padding:16px;margin-bottom:18px;overflow:hidden;transition:filter .3s">' +
+        '<div style="font-family:var(--mono);font-size:.68rem;color:var(--text-faint);letter-spacing:.08em">STUDIO CARD</div>' +
+        '<div class="num" style="margin-top:30px;font-family:var(--mono);letter-spacing:.12em;font-size:1.05rem">4412&nbsp;&nbsp;08•4</div>' +
+        '<div style="position:absolute;inset:0;background:rgba(180,210,255,.14);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center;font-size:1.6rem" id="fz-overlay">❄</div>' +
+      '</div>' +
+      '<div class="d-row" style="margin-bottom:16px">' +
+        '<span id="fz-label" style="font-size:.88rem;font-weight:500">Card active</span>' +
+        '<label class="switch"><input type="checkbox" id="fz-toggle"><span class="track"></span><span class="thumb"></span></label>' +
+      '</div>' +
+      '<div id="fz-tx" style="display:flex;flex-direction:column;gap:8px;transition:opacity .3s">' +
+        '<div class="d-row" style="font-size:.8rem;color:var(--text-dim)"><span>Corner Coffee</span><span class="num">–$4.50</span></div>' +
+        '<div class="d-row" style="font-size:.8rem;color:var(--text-dim)"><span>Transit</span><span class="num">–$2.75</span></div>' +
+      '</div>',
+    init:function(root){
+      var toggle = root.querySelector("#fz-toggle"), overlay = root.querySelector("#fz-overlay");
+      var label = root.querySelector("#fz-label"), tx = root.querySelector("#fz-tx"), card = root.querySelector("#fz-card");
+      toggle.addEventListener("change", function(){
+        var on = toggle.checked;
+        overlay.style.opacity = on ? 1 : 0;
+        card.style.filter = on ? "saturate(.5)" : "none";
+        label.textContent = on ? "Frozen — transactions paused" : "Card active";
+        tx.style.opacity = on ? .35 : 1;
+      });
+    }
+  };
+
+  ENGINES.cart = {
+    html:
+      '<div class="d-row" style="margin-bottom:26px">' +
+        '<span style="font-family:var(--mono);font-size:.75rem;color:var(--text-faint)">Menu</span>' +
+        '<div style="position:relative" id="cart-icon">🧺<span id="cart-badge" style="position:absolute;top:-8px;right:-10px;background:var(--accent);color:var(--accent-ink);font-family:var(--mono);font-size:.64rem;font-weight:700;border-radius:999px;padding:1px 6px">0</span></div>' +
+      '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:10px" id="cart-items"></div>',
+    init:function(root){
+      var dishes = [["Charred broccolini","$11"],["Miso butter corn","$8"],["Smoked eggplant","$13"]];
+      var list = root.querySelector("#cart-items"), badge = root.querySelector("#cart-badge"), icon = root.querySelector("#cart-icon");
+      var count = 0;
+      dishes.forEach(function(d){
+        var row = document.createElement("div");
+        row.style.cssText = "display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:10px 12px";
+        row.innerHTML = '<span style="font-size:.85rem">' + d[0] + ' <span class="num" style="color:var(--text-faint)">' + d[1] + '</span></span><button class="d-btn add-btn" style="padding:7px 12px">Add</button>';
+        row.querySelector(".add-btn").addEventListener("click", function(e){
+          var btnRect = e.target.getBoundingClientRect(), iconRect = icon.getBoundingClientRect();
+          var ghost = document.createElement("div");
+          ghost.textContent = "●";
+          ghost.style.cssText = "position:fixed;z-index:200;color:var(--accent);font-size:14px;left:" + btnRect.left + "px;top:" + btnRect.top + "px;transition:transform .5s cubic-bezier(.2,.8,.3,1),opacity .5s";
+          document.body.appendChild(ghost);
+          requestAnimationFrame(function(){
+            ghost.style.transform = "translate(" + (iconRect.left - btnRect.left) + "px," + (iconRect.top - btnRect.top) + "px) scale(.3)";
+            ghost.style.opacity = "0.2";
+          });
+          setTimeout(function(){
+            ghost.remove(); count++; badge.textContent = count;
+            badge.style.transform = "scale(1.4)";
+            setTimeout(function(){ badge.style.transform = "scale(1)"; }, 140);
+          }, 500);
+        });
+        list.appendChild(row);
+      });
+      badge.style.transition = "transform .14s";
+    }
+  };
+
+  ENGINES.bmi = {
+    html:
+      '<div style="margin-bottom:18px"><div class="d-row"><span class="d-label" style="margin:0">Height</span><span class="num" id="bmi-h-val">172 cm</span></div><input type="range" id="bmi-h" min="140" max="210" value="172" style="width:100%;accent-color:var(--accent);margin-top:6px"></div>' +
+      '<div style="margin-bottom:22px"><div class="d-row"><span class="d-label" style="margin:0">Weight</span><span class="num" id="bmi-w-val">68 kg</span></div><input type="range" id="bmi-w" min="40" max="140" value="68" style="width:100%;accent-color:var(--accent);margin-top:6px"></div>' +
+      '<div style="background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:16px;text-align:center">' +
+        '<div class="num" id="bmi-val" style="font-family:var(--disp);font-size:2.2rem;font-weight:700">0.0</div>' +
+        '<div id="bmi-cat" style="display:inline-block;margin-top:8px;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:999px"></div>' +
+      '</div>',
+    init:function(root){
+      var h = root.querySelector("#bmi-h"), w = root.querySelector("#bmi-w");
+      var hv = root.querySelector("#bmi-h-val"), wv = root.querySelector("#bmi-w-val");
+      var val = root.querySelector("#bmi-val"), cat = root.querySelector("#bmi-cat");
+      function paint(){
+        var height = +h.value, weight = +w.value;
+        hv.textContent = height + " cm"; wv.textContent = weight + " kg";
+        var bmi = weight / Math.pow(height/100, 2);
+        val.textContent = bmi.toFixed(1);
+        var label, color;
+        if (bmi < 18.5){ label = "Underweight"; color = "var(--warn)"; }
+        else if (bmi < 25){ label = "Healthy range"; color = "var(--good)"; }
+        else if (bmi < 30){ label = "Overweight"; color = "var(--warn)"; }
+        else { label = "Higher range"; color = "var(--bad)"; }
+        cat.textContent = label; cat.style.background = color; cat.style.color = "var(--accent-ink)";
+      }
+      h.addEventListener("input", paint); w.addEventListener("input", paint); paint();
+    }
+  };
+
+  ENGINES.courier = {
+    html:
+      '<div style="position:relative;height:4px;background:var(--surface-2);border-radius:3px;margin:36px 0 26px">' +
+        '<div id="cr-fill" style="position:absolute;left:0;top:0;height:100%;width:0%;background:var(--accent);border-radius:3px"></div>' +
+        '<div id="cr-dot" style="position:absolute;top:50%;left:0%;width:16px;height:16px;border-radius:50%;background:var(--accent);transform:translate(-50%,-50%);box-shadow:0 0 0 4px var(--accent-soft);transition:left .2s linear">🛵</div>' +
+      '</div>' +
+      '<div class="d-row"><span style="font-size:.85rem;color:var(--text-dim)" id="cr-status">Ready to dispatch</span><span class="num" id="cr-eta" style="font-family:var(--disp);font-weight:700">12:00</span></div>' +
+      '<button class="d-btn" id="cr-start" style="width:100%;margin-top:18px">Start delivery</button>',
+    init:function(root){
+      var dot = root.querySelector("#cr-dot"), fill = root.querySelector("#cr-fill");
+      var eta = root.querySelector("#cr-eta"), status = root.querySelector("#cr-status"), btn = root.querySelector("#cr-start");
+      btn.addEventListener("click", function(){
+        btn.disabled = true; status.textContent = "Courier is on the way";
+        var secs = 720, total = 6000, start = Date.now();
+        var iv = setInterval(function(){
+          var p = Math.min(1, (Date.now() - start) / total);
+          dot.style.left = (p*100) + "%"; fill.style.width = (p*100) + "%";
+          var remain = Math.round(secs * (1-p));
+          eta.textContent = String(Math.floor(remain/60)).padStart(2,"0") + ":" + String(remain%60).padStart(2,"0");
+          if (p >= 1){ clearInterval(iv); status.textContent = "Delivered ✓"; eta.textContent = "00:00"; btn.disabled = false; btn.textContent = "Run again"; }
+        }, 60);
+      });
+    }
+  };
+
+  ENGINES.pricing = {
+    html:
+      '<div class="d-row" style="justify-content:center;gap:14px;margin-bottom:20px"><span style="font-size:.8rem;color:var(--text-dim)">Monthly</span><label class="switch"><input type="checkbox" id="pr-toggle"><span class="track"></span><span class="thumb"></span></label><span style="font-size:.8rem;color:var(--text-dim)">Yearly <span style="color:var(--good)">−20%</span></span></div>' +
+      '<div id="pr-cards" style="display:flex;flex-direction:column;gap:10px"></div>',
+    init:function(root){
+      var plans = [
+        {name:"Basic", m:9, rec:false},
+        {name:"Studio", m:24, rec:true},
+        {name:"Team", m:49, rec:false}
+      ];
+      var wrap = root.querySelector("#pr-cards"), toggle = root.querySelector("#pr-toggle");
+      var cardEls = plans.map(function(p){
+        var el = document.createElement("div");
+        el.style.cssText = "border-radius:var(--radius-s);padding:14px 16px;cursor:pointer;transition:.2s;border:1px solid var(--border-hi);background:var(--surface)";
+        wrap.appendChild(el);
+        el.addEventListener("click", function(){
+          cardEls.forEach(function(c){ c.el.style.opacity = (c.el === el) ? "1" : ".55"; });
+        });
+        return {el:el, data:p};
+      });
+      function paint(){
+        var yearly = toggle.checked;
+        cardEls.forEach(function(c){
+          var price = yearly ? (c.data.m * 0.8) : c.data.m;
+          c.el.innerHTML =
+            (c.data.rec ? '<span style="font-family:var(--mono);font-size:.62rem;color:var(--accent-ink);background:var(--accent);padding:2px 7px;border-radius:4px;font-weight:600">RECOMMENDED</span><br><br>' : '') +
+            '<div style="font-weight:700;font-family:var(--disp);font-size:1.05rem">' + c.data.name + '</div>' +
+            '<div class="num" style="margin-top:4px;color:var(--text-dim);font-size:.85rem">$' + price.toFixed(0) + ' / mo</div>';
+          c.el.style.borderColor = c.data.rec ? "var(--accent)" : "var(--border-hi)";
+          c.el.style.transform = c.data.rec ? "scale(1.02)" : "none";
+        });
+      }
+      toggle.addEventListener("change", paint);
+      paint();
+    }
+  };
+
+  ENGINES.press = {
+    html:
+      '<div id="pp-card" style="user-select:none;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-m);padding:18px;text-align:center;cursor:pointer;overflow:hidden">' +
+        '<div style="width:64px;height:64px;margin:0 auto 12px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#c23a12)"></div>' +
+        '<div style="font-weight:700">Ridge Runner Tee</div>' +
+        '<div class="num" style="color:var(--text-faint);font-size:.85rem;margin-top:2px">$38</div>' +
+        '<div id="pp-hint" style="margin-top:10px;font-family:var(--mono);font-size:.66rem;color:var(--text-faint);letter-spacing:.05em">PRESS AND HOLD</div>' +
+        '<div id="pp-reveal" style="max-height:0;overflow:hidden;transition:max-height .3s ease">' +
+          '<div style="display:flex;gap:6px;justify-content:center;margin:14px 0 10px">' +
+            '<button class="d-btn ghost" data-size style="padding:6px 12px">S</button>' +
+            '<button class="d-btn ghost" data-size style="padding:6px 12px">M</button>' +
+            '<button class="d-btn ghost" data-size style="padding:6px 12px">L</button>' +
+          '</div>' +
+          '<button class="d-btn" style="width:100%">Add to cart</button>' +
+        '</div>' +
+      '</div>',
+    init:function(root){
+      var card = root.querySelector("#pp-card"), reveal = root.querySelector("#pp-reveal"), hint = root.querySelector("#pp-hint");
+      var timer = null;
+      function start(){ timer = setTimeout(function(){ reveal.style.maxHeight = "140px"; hint.textContent = "READY"; }, 450); }
+      function cancel(){ clearTimeout(timer); }
+      card.addEventListener("mousedown", start);
+      card.addEventListener("touchstart", start, {passive:true});
+      ["mouseup","mouseleave","touchend"].forEach(function(ev){ card.addEventListener(ev, cancel); });
+      root.querySelectorAll("[data-size]").forEach(function(b){
+        b.addEventListener("click", function(e){
+          e.stopPropagation();
+          root.querySelectorAll("[data-size]").forEach(function(x){ x.style.background = "none"; x.style.color = "var(--text)"; });
+          b.style.background = "var(--accent)"; b.style.color = "var(--accent-ink)";
+        });
+      });
+    }
+  };
+
+  ENGINES.chat = {
+    html:
+      '<div id="ch-thread" style="display:flex;flex-direction:column;gap:8px;min-height:140px;margin-bottom:14px"></div>' +
+      '<div class="d-row"><input class="d-field" id="ch-input" placeholder="Write a message…" style="flex:1"><button class="d-btn" id="ch-send" style="margin-left:8px">Send</button></div>',
+    init:function(root){
+      var thread = root.querySelector("#ch-thread"), input = root.querySelector("#ch-input"), send = root.querySelector("#ch-send");
+      function bubble(text, mine){
+        var b = document.createElement("div");
+        b.style.cssText = "max-width:78%;padding:9px 13px;border-radius:14px;font-size:.85rem;align-self:" + (mine?"flex-end":"flex-start") +
+          ";background:" + (mine?"var(--accent)":"var(--surface-2)") + ";color:" + (mine?"var(--accent-ink)":"var(--text)") + ";opacity:0;transition:opacity .25s,transform .25s;transform:translateY(6px)";
+        b.textContent = text;
+        thread.appendChild(b);
+        requestAnimationFrame(function(){ b.style.opacity = 1; b.style.transform = "none"; });
+        return b;
+      }
+      function reply(){
+        var typing = bubble("···", false);
+        typing.style.fontWeight = "700"; typing.style.letterSpacing = "2px";
+        setTimeout(function(){
+          typing.textContent = "Got it — moving on this today.";
+        }, 1100);
+      }
+      function go(){
+        var v = input.value.trim(); if (!v) return;
+        bubble(v, true); input.value = "";
+        setTimeout(reply, 500);
+      }
+      send.addEventListener("click", go);
+      input.addEventListener("keydown", function(e){ if (e.key === "Enter") go(); });
+      bubble("Studio update from earlier today.", false);
+    }
+  };
+
+  ENGINES.drawer = {
+    html: '<div id="dr-list" style="display:flex;flex-direction:column;gap:8px"></div>',
+    init:function(root){
+      var sections = [
+        ["Notifications","Choose how the studio reaches you — email digests, push alerts, or nothing at all."],
+        ["Appearance","Switch between light, dark, or let the system decide for you."],
+        ["Privacy","Control what's visible on your public profile and who can reach you directly."],
+        ["Billing","Manage your plan, payment method, and invoice history in one place."]
+      ];
+      var list = root.querySelector("#dr-list");
+      sections.forEach(function(s){
+        var wrap = document.createElement("div");
+        wrap.style.cssText = "border:1px solid var(--border-hi);border-radius:var(--radius-s);overflow:hidden";
+        wrap.innerHTML =
+          '<button type="button" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--surface);border:none;cursor:pointer;font-size:.88rem;font-weight:500;color:var(--text)">' + s[0] + '<span class="chev" style="transition:transform .2s;color:var(--text-faint)">⌄</span></button>' +
+          '<div class="panel" style="max-height:0;overflow:hidden;transition:max-height .25s ease"><div style="padding:0 14px 14px;font-size:.8rem;color:var(--text-dim)">' + s[1] + '</div></div>';
+        var btn = wrap.querySelector("button"), panel = wrap.querySelector(".panel"), chev = wrap.querySelector(".chev");
+        btn.addEventListener("click", function(){
+          var open = panel.style.maxHeight !== "0px" && panel.style.maxHeight !== "";
+          panel.style.maxHeight = open ? "0px" : "120px";
+          chev.style.transform = open ? "none" : "rotate(180deg)";
+        });
+        list.appendChild(wrap);
+      });
+    }
+  };
+
+  ENGINES.autosave = {
+    html:
+      '<div class="d-row" style="margin-bottom:14px">' +
+        '<span style="font-size:.9rem;font-weight:500">Round up purchases</span>' +
+        '<label class="switch"><input type="checkbox" id="as-toggle"><span class="track"></span><span class="thumb"></span></label>' +
+      '</div>' +
+      '<div id="as-detail" style="max-height:0;overflow:hidden;transition:max-height .3s ease">' +
+        '<div style="background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:14px;font-size:.83rem;color:var(--text-dim)">' +
+          'Every purchase rounds up to the nearest dollar. The difference collects here and sweeps into savings <b style="color:var(--text)">every Friday</b>.' +
+          '<div class="d-row" style="margin-top:12px"><span class="d-label" style="margin:0">This week so far</span><span class="num" style="color:var(--accent);font-weight:600">+$2.85</span></div>' +
+        '</div>' +
+      '</div>',
+    init:function(root){
+      var toggle = root.querySelector("#as-toggle"), detail = root.querySelector("#as-detail");
+      toggle.addEventListener("change", function(){ detail.style.maxHeight = toggle.checked ? "160px" : "0px"; });
+    }
+  };
+
+  /* ---- shared, reusable engines (each instantiated fresh per open) ---- */
+
+  ENGINES.reveal = {
+    html:
+      '<div class="d-row" style="margin-bottom:14px"><span style="font-size:.88rem;font-weight:500">Enable</span><label class="switch"><input type="checkbox" id="rv-t"><span class="track"></span><span class="thumb"></span></label></div>' +
+      '<div id="rv-out" style="max-height:0;overflow:hidden;transition:max-height .3s ease">' +
+        '<div style="background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:14px;display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--text-dim)">' +
+          '<span style="color:var(--good);font-size:1rem;flex:none">✓</span> State applied — the interface now reflects it, right where you switched it on.' +
+        '</div>' +
+      '</div>',
+    init:function(root){
+      var t = root.querySelector("#rv-t"), out = root.querySelector("#rv-out");
+      t.addEventListener("change", function(){ out.style.maxHeight = t.checked ? "100px" : "0px"; });
+    }
+  };
+
+  ENGINES.slider = {
+    html:
+      '<div class="d-row"><span class="d-label" style="margin:0">Input</span><span class="num" id="sl-val">50</span></div>' +
+      '<input type="range" id="sl-in" min="0" max="100" value="50" style="width:100%;accent-color:var(--accent);margin:8px 0 20px">' +
+      '<div style="background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:14px;text-align:center">' +
+        '<div class="d-label">Resulting state</div>' +
+        '<div id="sl-pill" style="display:inline-block;margin-top:6px;font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;padding:5px 14px;border-radius:999px;font-weight:600">Balanced</div>' +
+      '</div>',
+    init:function(root){
+      var input = root.querySelector("#sl-in"), val = root.querySelector("#sl-val"), pill = root.querySelector("#sl-pill");
+      function paint(){
+        var v = +input.value;
+        val.textContent = v;
+        var label, color;
+        if (v < 34){ label = "Under target"; color = "var(--warn)"; }
+        else if (v < 75){ label = "Balanced"; color = "var(--good)"; }
+        else { label = "At capacity"; color = "var(--bad)"; }
+        pill.textContent = label; pill.style.background = color; pill.style.color = "var(--accent-ink)";
+      }
+      input.addEventListener("input", paint); paint();
+    }
+  };
+
+  ENGINES.dualslider = {
+    html:
+      '<div style="margin-bottom:16px"><div class="d-row"><span class="d-label" style="margin:0">First input</span><span class="num" id="ds-a-val">50</span></div><input type="range" id="ds-a" min="0" max="100" value="50" style="width:100%;accent-color:var(--accent);margin-top:6px"></div>' +
+      '<div style="margin-bottom:20px"><div class="d-row"><span class="d-label" style="margin:0">Second input</span><span class="num" id="ds-b-val">50</span></div><input type="range" id="ds-b" min="0" max="100" value="50" style="width:100%;accent-color:var(--accent);margin-top:6px"></div>' +
+      '<div style="background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:16px;text-align:center">' +
+        '<div class="d-label">Recommended outcome</div>' +
+        '<div class="num" id="ds-out" style="font-family:var(--disp);font-size:1.8rem;font-weight:700;margin-top:4px">0</div>' +
+      '</div>',
+    init:function(root){
+      var a = root.querySelector("#ds-a"), b = root.querySelector("#ds-b");
+      var av = root.querySelector("#ds-a-val"), bv = root.querySelector("#ds-b-val"), out = root.querySelector("#ds-out");
+      function paint(){
+        av.textContent = a.value; bv.textContent = b.value;
+        out.textContent = Math.round((+a.value + +b.value) / 2 * 1.4);
+      }
+      a.addEventListener("input", paint); b.addEventListener("input", paint); paint();
+    }
+  };
+
+  ENGINES.checklist = {
+    html:
+      '<div style="height:6px;background:var(--surface-2);border-radius:3px;margin-bottom:18px;overflow:hidden"><div id="cl-bar" style="height:100%;width:0%;background:var(--accent);transition:width .25s"></div></div>' +
+      '<div style="display:flex;flex-direction:column;gap:8px" id="cl-items">' +
+        '<label class="d-check"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--accent)"> First requirement met</label>' +
+        '<label class="d-check"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--accent)"> Second requirement met</label>' +
+        '<label class="d-check"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--accent)"> Third requirement met</label>' +
+        '<label class="d-check"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--accent)"> Fourth requirement met</label>' +
+      '</div>' +
+      '<div class="num" id="cl-count" style="margin-top:14px;font-family:var(--mono);font-size:.72rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em">0 / 4 complete</div>',
+    init:function(root){
+      var boxes = root.querySelectorAll("#cl-items input"), bar = root.querySelector("#cl-bar"), count = root.querySelector("#cl-count");
+      function paint(){
+        var n = 0; boxes.forEach(function(b){ if (b.checked) n++; });
+        bar.style.width = (n/4*100) + "%";
+        count.textContent = n + " / 4 complete" + (n === 4 ? " — done" : "");
+        root.querySelectorAll("#cl-items label").forEach(function(l, i){ l.classList.toggle("ok", boxes[i].checked); });
+      }
+      boxes.forEach(function(b){ b.addEventListener("change", paint); });
+    }
+  };
+
+  ENGINES.reorder = {
+    html: '<div id="ro-list" style="display:flex;flex-direction:column;gap:8px"></div>',
+    init:function(root){
+      var items = ["Discovery call","Proposal sent","Contract signed","Kickoff scheduled"];
+      var list = root.querySelector("#ro-list");
+      function render(){
+        list.innerHTML = "";
+        items.forEach(function(text, i){
+          var row = document.createElement("div");
+          row.style.cssText = "display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:9px 10px;transition:transform .2s";
+          row.innerHTML =
+            '<span class="num" style="color:var(--text-faint);font-family:var(--mono);font-size:.72rem;width:16px">' + (i+1) + '</span>' +
+            '<span style="flex:1;font-size:.85rem">' + text + '</span>' +
+            '<button class="d-btn ghost" data-dir="up" style="padding:4px 9px" ' + (i===0?"disabled":"") + '>▲</button>' +
+            '<button class="d-btn ghost" data-dir="down" style="padding:4px 9px" ' + (i===items.length-1?"disabled":"") + '>▼</button>';
+          row.querySelector('[data-dir="up"]').addEventListener("click", function(){ move(i, -1); });
+          row.querySelector('[data-dir="down"]').addEventListener("click", function(){ move(i, 1); });
+          list.appendChild(row);
+        });
+      }
+      function move(i, dir){
+        var j = i + dir; if (j < 0 || j >= items.length) return;
+        var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
+        render();
+      }
+      render();
+    }
+  };
+
+  ENGINES.accordion = {
+    html: '<div id="ac-list" style="display:flex;flex-direction:column;gap:8px"></div>',
+    init:function(root){
+      var sections = [
+        ["Step one","The first part of this record — collapses to a single line once it's filled in."],
+        ["Step two","The second part — stays out of the way until you need to open it again."],
+        ["Step three","The last part — everything before it is already summarized above."]
+      ];
+      var list = root.querySelector("#ac-list");
+      sections.forEach(function(s){
+        var wrap = document.createElement("div");
+        wrap.style.cssText = "border:1px solid var(--border-hi);border-radius:var(--radius-s);overflow:hidden";
+        wrap.innerHTML =
+          '<button type="button" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--surface);border:none;cursor:pointer;font-size:.86rem;font-weight:500;color:var(--text)">' + s[0] + '<span class="chev" style="transition:transform .2s;color:var(--text-faint)">⌄</span></button>' +
+          '<div class="panel" style="max-height:0;overflow:hidden;transition:max-height .25s ease"><div style="padding:0 14px 14px;font-size:.8rem;color:var(--text-dim)">' + s[1] + '</div></div>';
+        var btn = wrap.querySelector("button"), panel = wrap.querySelector(".panel"), chev = wrap.querySelector(".chev");
+        btn.addEventListener("click", function(){
+          var open = panel.style.maxHeight !== "0px" && panel.style.maxHeight !== "";
+          panel.style.maxHeight = open ? "0px" : "100px";
+          chev.style.transform = open ? "none" : "rotate(180deg)";
+        });
+        list.appendChild(wrap);
+      });
+    }
+  };
+
+  ENGINES.segmented = {
+    html:
+      '<div style="display:flex;border:1px solid var(--border-hi);border-radius:var(--radius-s);overflow:hidden;margin-bottom:16px" id="sg-seg">' +
+        '<button type="button" class="sg-opt" data-v="0" style="flex:1;padding:10px;background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--text-dim);font-family:var(--mono)">PENDING</button>' +
+        '<button type="button" class="sg-opt" data-v="1" style="flex:1;padding:10px;background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--text-dim);font-family:var(--mono);border-left:1px solid var(--border-hi);border-right:1px solid var(--border-hi)">ACTIVE</button>' +
+        '<button type="button" class="sg-opt" data-v="2" style="flex:1;padding:10px;background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--text-dim);font-family:var(--mono)">DONE</button>' +
+      '</div>' +
+      '<div class="d-row" style="background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:14px">' +
+        '<span style="font-size:.85rem">Row status</span>' +
+        '<span id="sg-chip" style="width:10px;height:10px;border-radius:50%"></span>' +
+      '</div>',
+    init:function(root){
+      var opts = root.querySelectorAll(".sg-opt"), chip = root.querySelector("#sg-chip");
+      var colors = ["var(--warn)","var(--accent)","var(--good)"];
+      function paint(v){
+        opts.forEach(function(o){ o.style.color = (+o.dataset.v === v) ? "var(--text)" : "var(--text-dim)"; o.style.background = (+o.dataset.v === v) ? "var(--surface-2)" : "none"; });
+        chip.style.background = colors[v];
+      }
+      opts.forEach(function(o){ o.addEventListener("click", function(){ paint(+o.dataset.v); }); });
+      paint(0);
+    }
+  };
+
+  ENGINES.chips = {
+    html:
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px" id="ch-chips">' +
+        '<button type="button" class="chip" data-c="1">Group A</button>' +
+        '<button type="button" class="chip" data-c="2">Group B</button>' +
+        '<button type="button" class="chip" data-c="3">Group C</button>' +
+      '</div>' +
+      '<div class="dotgrid" id="ch-grid"></div>',
+    init:function(root){
+      var chips = root.querySelectorAll(".chip"), grid = root.querySelector("#ch-grid");
+      var active = new Set();
+      var items = [];
+      for (var i = 0; i < 18; i++) items.push((i % 3) + 1);
+      items.forEach(function(g){
+        var d = document.createElement("div");
+        d.className = "dd";
+        d.dataset.g = g;
+        grid.appendChild(d);
+      });
+      function paint(){
+        var dots = grid.querySelectorAll(".dd");
+        var any = active.size > 0;
+        dots.forEach(function(d){
+          var on = active.has(+d.dataset.g);
+          d.classList.toggle("match", any && on);
+          d.classList.toggle("dim", any && !on);
+        });
+      }
+      chips.forEach(function(c){
+        c.addEventListener("click", function(){
+          var v = +c.dataset.c;
+          c.classList.toggle("on");
+          if (active.has(v)) active.delete(v); else active.add(v);
+          paint();
+        });
+      });
+    }
+  };
+
+  ENGINES.countup = {
+    html:
+      '<button class="d-btn" id="cu-btn" style="width:100%;margin-bottom:20px">Reveal total</button>' +
+      '<div style="background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:20px;text-align:center">' +
+        '<div class="num" id="cu-val" style="font-family:var(--disp);font-size:2.2rem;font-weight:700">0</div>' +
+        '<div class="d-label" style="margin-top:6px">Assembled live, not pasted in</div>' +
+      '</div>',
+    init:function(root){
+      var btn = root.querySelector("#cu-btn"), val = root.querySelector("#cu-val");
+      btn.addEventListener("click", function(){
+        btn.disabled = true;
+        var target = 1248, start = Date.now(), dur = 900;
+        var iv = setInterval(function(){
+          var p = Math.min(1, (Date.now() - start) / dur);
+          val.textContent = Math.round(target * (1 - Math.pow(1-p, 3))).toLocaleString("en-US");
+          if (p >= 1){ clearInterval(iv); btn.disabled = false; btn.textContent = "Run again"; }
+        }, 16);
+      });
+    }
+  };
+
+  ENGINES.compare = {
+    html: '<div style="display:flex;gap:10px" id="cp-cards"></div>',
+    init:function(root){
+      var names = ["Option A","Option B","Option C"];
+      var wrap = root.querySelector("#cp-cards");
+      var els = names.map(function(name, i){
+        var el = document.createElement("div");
+        el.className = "swatch" + (i === 0 ? " sel" : "");
+        el.innerHTML = '<div style="font-weight:600;font-size:.85rem">' + name + '</div><div class="d-label" style="margin-top:6px">' + (i===0?"Selected":"Tap to choose") + '</div>';
+        el.addEventListener("click", function(){
+          els.forEach(function(e2, j){ e2.classList.toggle("sel", e2 === el); e2.querySelector(".d-label").textContent = (e2 === el) ? "Selected" : "Tap to choose"; });
+        });
+        wrap.appendChild(el);
+        return el;
+      });
+    }
+  };
+
+  ENGINES.longpress = {
+    html:
+      '<div id="lp-row" style="user-select:none;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:16px;text-align:center;cursor:pointer;position:relative">' +
+        '<div style="font-size:.85rem">Hold this row</div>' +
+        '<div class="d-label" style="margin-top:4px" id="lp-hint">PRESS AND HOLD</div>' +
+      '</div>' +
+      '<div id="lp-fan" style="display:flex;justify-content:center;gap:14px;margin-top:16px;opacity:0;transition:opacity .25s">' +
+        '<div class="d-btn ghost" style="border-radius:50%;width:42px;height:42px;padding:0;display:flex;align-items:center;justify-content:center">✎</div>' +
+        '<div class="d-btn ghost" style="border-radius:50%;width:42px;height:42px;padding:0;display:flex;align-items:center;justify-content:center">📌</div>' +
+        '<div class="d-btn" style="border-radius:50%;width:42px;height:42px;padding:0;display:flex;align-items:center;justify-content:center;background:var(--bad);color:#fff">✕</div>' +
+      '</div>',
+    init:function(root){
+      var row = root.querySelector("#lp-row"), fan = root.querySelector("#lp-fan"), hint = root.querySelector("#lp-hint");
+      var timer = null;
+      function start(){ timer = setTimeout(function(){ fan.style.opacity = 1; hint.textContent = "ACTIONS READY"; }, 420); }
+      function cancel(){ clearTimeout(timer); }
+      row.addEventListener("mousedown", start);
+      row.addEventListener("touchstart", start, {passive:true});
+      ["mouseup","mouseleave","touchend"].forEach(function(ev){ row.addEventListener(ev, cancel); });
+    }
+  };
+
+  ENGINES.scrub = {
+    html:
+      '<div class="spark" id="sc-spark"></div>' +
+      '<input type="range" id="sc-range" min="0" max="6" value="3" step="1" style="width:100%;accent-color:var(--accent);margin-top:14px">' +
+      '<div class="d-row" style="margin-top:10px"><span class="d-label" style="margin:0" id="sc-label">Day 4</span><span class="num" id="sc-val">62</span></div>',
+    init:function(root){
+      var spark = root.querySelector("#sc-spark"), range = root.querySelector("#sc-range");
+      var label = root.querySelector("#sc-label"), val = root.querySelector("#sc-val");
+      var values = [22, 40, 31, 62, 48, 70, 55];
+      var bars = values.map(function(v){
+        var b = document.createElement("div");
+        b.className = "sb";
+        b.style.height = v + "%";
+        spark.appendChild(b);
+        return b;
+      });
+      function paint(){
+        var i = +range.value;
+        bars.forEach(function(b, j){ b.classList.toggle("hi", j === i); });
+        label.textContent = "Day " + (i+1);
+        val.textContent = values[i];
+      }
+      range.addEventListener("input", paint); paint();
+    }
+  };
+
+  ENGINES.ring = {
+    html:
+      '<div style="display:flex;justify-content:center"><svg width="140" height="140" viewBox="0 0 140 140">' +
+        '<circle cx="70" cy="70" r="58" fill="none" stroke="var(--surface-2)" stroke-width="10"/>' +
+        '<circle id="rg-circle" cx="70" cy="70" r="58" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="364" stroke-dashoffset="364" transform="rotate(-90 70 70)"/>' +
+        '<text id="rg-text" x="70" y="76" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="var(--text)" font-weight="700">0%</text>' +
+      '</svg></div>' +
+      '<button class="d-btn" id="rg-start" style="width:100%;margin-top:18px">Start</button>',
+    init:function(root){
+      var circle = root.querySelector("#rg-circle"), text = root.querySelector("#rg-text"), btn = root.querySelector("#rg-start");
+      var circumference = 364;
+      btn.addEventListener("click", function(){
+        btn.disabled = true;
+        var start = Date.now(), dur = 3200;
+        var iv = setInterval(function(){
+          var p = Math.min(1, (Date.now() - start) / dur);
+          circle.style.strokeDashoffset = circumference * (1-p);
+          text.textContent = Math.round(p*100) + "%";
+          if (p >= 1){ clearInterval(iv); btn.disabled = false; btn.textContent = "Run again"; text.textContent = "Done"; }
+        }, 30);
+      });
+    }
+  };
+
+  ENGINES.typing = {
+    html:
+      '<button class="d-btn" id="ty-btn" style="width:100%;margin-bottom:16px">Run transcription</button>' +
+      '<div style="background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:14px;min-height:60px;font-family:var(--mono);font-size:.84rem;color:var(--text)" id="ty-out"></div>',
+    init:function(root){
+      var btn = root.querySelector("#ty-btn"), out = root.querySelector("#ty-out");
+      var line = "Let's move the review to Thursday at ten.";
+      btn.addEventListener("click", function(){
+        btn.disabled = true; out.textContent = "";
+        var i = 0;
+        var iv = setInterval(function(){
+          out.textContent += line[i]; i++;
+          if (i >= line.length){ clearInterval(iv); btn.disabled = false; btn.textContent = "Run again"; }
+        }, 38);
+      });
+    }
+  };
+
+  ENGINES.masked = {
+    html:
+      '<label class="d-label" for="mk-in">Recovery key</label>' +
+      '<input class="d-field" id="mk-in" type="password" placeholder="Enter key" style="margin-bottom:14px">' +
+      '<button class="d-btn" id="mk-verify" style="width:100%;margin-bottom:14px">Verify</button>' +
+      '<div id="mk-result" style="font-size:.83rem;color:var(--text-faint)">Keys under 4 characters are rejected — try both.</div>',
+    init:function(root){
+      var input = root.querySelector("#mk-in"), btn = root.querySelector("#mk-verify"), result = root.querySelector("#mk-result");
+      btn.addEventListener("click", function(){
+        var ok = input.value.length >= 4;
+        if (ok){
+          result.textContent = "Key accepted.";
+          result.style.color = "var(--good)";
+          input.style.borderColor = "var(--good)";
+        } else {
+          result.textContent = "Rejected — key is too short.";
+          result.style.color = "var(--bad)";
+          input.style.borderColor = "var(--bad)";
+          input.style.transition = "transform .08s";
+          var shakes = [-6,6,-4,4,0]; var i = 0;
+          var iv = setInterval(function(){ input.style.transform = "translateX(" + shakes[i] + "px)"; i++; if (i >= shakes.length) clearInterval(iv); }, 50);
+        }
+      });
+    }
+  };
+
+  ENGINES.toast = {
+    html:
+      '<button class="d-btn" id="ts-btn" style="width:100%">Remove item</button>' +
+      '<div class="toastwrap" id="ts-wrap"></div>',
+    init:function(root){
+      var btn = root.querySelector("#ts-btn"), wrap = root.querySelector("#ts-wrap");
+      btn.addEventListener("click", function(){
+        var t = document.createElement("div");
+        t.className = "toast";
+        t.innerHTML = '<span>Item removed</span><button class="d-btn ghost" style="padding:5px 10px">Undo</button><div class="bar" style="width:100%;transition-duration:4000ms"></div>';
+        wrap.insertBefore(t, wrap.firstChild);
+        var bar = t.querySelector(".bar");
+        var undone = false;
+        t.querySelector("button").addEventListener("click", function(){
+          undone = true; t.querySelector("span").textContent = "Restored"; bar.remove();
+          setTimeout(function(){ t.style.opacity = 0; setTimeout(function(){ t.remove(); }, 250); }, 700);
+        });
+        requestAnimationFrame(function(){ bar.style.width = "0%"; });
+        setTimeout(function(){
+          if (undone) return;
+          t.style.opacity = 0;
+          setTimeout(function(){ t.remove(); }, 250);
+        }, 4000);
+      });
+    }
+  };
+
+  ENGINES.skeleton = {
+    html:
+      '<button class="d-btn" id="sk-btn" style="width:100%;margin-bottom:16px">Load</button>' +
+      '<div id="sk-zone" style="display:flex;flex-direction:column;gap:10px"></div>',
+    init:function(root){
+      var btn = root.querySelector("#sk-btn"), zone = root.querySelector("#sk-zone");
+      function skeletons(){
+        zone.innerHTML = "";
+        for (var i=0;i<3;i++){
+          var row = document.createElement("div");
+          row.style.cssText = "display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:12px";
+          row.innerHTML = '<div style="width:36px;height:36px;border-radius:6px" class="skel"></div><div style="flex:1" class="skel"></div>';
+          zone.appendChild(row);
+        }
+      }
+      function content(){
+        var rows = [["Result one","Ready"],["Result two","Ready"],["Result three","Ready"]];
+        zone.innerHTML = "";
+        rows.forEach(function(r){
+          var row = document.createElement("div");
+          row.style.cssText = "display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:12px;opacity:0;transition:opacity .3s;font-size:.85rem";
+          row.innerHTML = '<span>' + r[0] + '</span><span style="color:var(--good);font-family:var(--mono);font-size:.7rem;text-transform:uppercase">' + r[1] + '</span>';
+          zone.appendChild(row);
+          requestAnimationFrame(function(){ row.style.opacity = 1; });
+        });
+      }
+      btn.addEventListener("click", function(){
+        btn.disabled = true;
+        skeletons();
+        setTimeout(function(){ content(); btn.disabled = false; }, 750);
+      });
+    }
+  };
+
+  ENGINES.empty = {
+    html: '<div id="em-zone"></div>',
+    init:function(root){
+      var zone = root.querySelector("#em-zone");
+      function empty(){
+        zone.innerHTML =
+          '<div style="text-align:center;padding:30px 16px;border:1px dashed var(--border-hi);border-radius:var(--radius-s)">' +
+            '<div style="color:var(--text-faint);font-size:.85rem;margin-bottom:14px">Nothing here yet</div>' +
+            '<button class="d-btn" id="em-add">Add the first item</button>' +
+          '</div>';
+        zone.querySelector("#em-add").addEventListener("click", filled);
+      }
+      function filled(){
+        zone.innerHTML =
+          '<div style="display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border-hi);border-radius:var(--radius-s);padding:14px;opacity:0;transition:opacity .3s">' +
+            '<span style="font-size:.85rem">First item added</span><span style="color:var(--good)">✓</span>' +
+          '</div>';
+        requestAnimationFrame(function(){ zone.firstChild.style.opacity = 1; });
+      }
+      empty();
+    }
+  };
+
+  ENGINES.swipe = {
+    html:
+      '<div id="sw-stage" style="position:relative;height:150px"></div>' +
+      '<div class="d-row" style="margin-top:14px;justify-content:center;gap:16px" id="sw-controls">' +
+        '<button class="d-btn ghost" id="sw-pass">Pass</button>' +
+        '<button class="d-btn" id="sw-keep">Keep</button>' +
+      '</div>',
+    init:function(root){
+      var stage = root.querySelector("#sw-stage");
+      var names = ["Candidate 03","Candidate 02","Candidate 01"];
+      function render(){
+        stage.innerHTML = "";
+        names.forEach(function(n, i){
+          var card = document.createElement("div");
+          card.className = "stackcard";
+          card.style.cssText += "position:absolute;inset:0;z-index:" + i + ";transform:translateY(" + ((names.length-1-i)*6) + "px) scale(" + (1 - (names.length-1-i)*0.03) + ")";
+          card.textContent = n;
+          stage.appendChild(card);
+        });
+        if (!names.length){
+          stage.innerHTML = '<div class="stackcard" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--text-faint)">Stack cleared</div>';
+        }
+      }
+      function act(){
+        var top = stage.lastElementChild;
+        if (!top || !names.length) return;
+        names.pop();
+        top.style.transition = "transform .3s,opacity .3s";
+        top.style.transform += " translateX(120px) rotate(8deg)";
+        top.style.opacity = "0";
+        setTimeout(render, 260);
+      }
+      root.querySelector("#sw-pass").addEventListener("click", act);
+      root.querySelector("#sw-keep").addEventListener("click", act);
+      render();
+    }
+  };
+
+  var engineCount = new Set();
+  DATA.forEach(function(cat){ cat.items.forEach(function(item){ engineCount.add(item.demo); }); });
+  document.getElementById("statEngines").textContent = engineCount.size;
+
+})();
+</script>
+</body>
+</html>
